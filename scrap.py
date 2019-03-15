@@ -143,7 +143,16 @@ def getItems(subsect):
         subset_dict[name]=cost
     return subset_dict    
         
-        
+def getPrice(search_item, dish_name):
+    menu=getMenu(search_item)
+    all_items, _=getDict(menu)
+    print(all_items.keys())
+    dish_name=dish_name.replace(" ","").lower()
+    try:
+        return all_items[dish_name]
+    except KeyError:
+        return None
+      
         
 
 def getFoodItems(menu):
@@ -163,16 +172,18 @@ def getItemByName(menu, itemname):
             
             
             
-menu=getMenu("thaal kitchen kakkanad")
-
-print(len(menu))
-itemlist=getItemByName(menu, "biryani")
-foood_list=getFoodItems(menu)
+#menu=getMenu("thaal kitchen kakkanad")
+#
+#print(len(menu))
+#itemlist=getItemByName(menu, "biryani")
+#foood_list=getFoodItems(menu)
 #print(foood_list)
 #print(itemlist)
 #subs=menu["maincourse"]
-sublist=getSubset(menu)
-print(sublist)
+#sublist=getSubset(menu)
+#print(sublist)
+price=getPrice("hotel thaal edapally", "chicken65")
+print(price)
 
     
     
