@@ -1,4 +1,3 @@
-import re
 from math import ceil
 from bs4 import BeautifulSoup 
 from urllib.request import urlopen
@@ -23,7 +22,6 @@ def findFood(searchURL):
 
     def findItem():
         searchSoup = getPage(surl)
-        #searchSoup = BeautifulSoup(open("mfp.html",encoding="latin-1"), 'lxml')
         flist = []
         mydivs = searchSoup.find_all("div", class_="food_info")
         for items in mydivs:
@@ -62,4 +60,4 @@ def findFood(searchURL):
     print("Carbs: " + itemCarb)
     print("Protein: " + itemProtein)
     print("Fat: " + itemFat)
-    return [itemName,itemCal,itemFat,itemCarb,itemProtein,itemServ]
+    return [itemName,itemCal,itemCarb,itemFat,itemProtein,itemServ]
