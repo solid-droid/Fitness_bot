@@ -11,11 +11,11 @@ def calBurned(calCount=170,weight=70):
     wTime = ceil(calCount*60/(3.5*weight))
     cTime = ceil(calCount*60/(5*weight))
     jTime = ceil(calCount*60/(8*weight))
-    return [wTime,cTime,jTime]
+    return [str(wTime)+" minutes",str(cTime)+ " minutes",str(jTime)+" minutes"]
 
 
 def findFood(searchURL):
-    surl = 'https://www.myfitnesspal.com/food/search?page=1&search='+ searchURL
+    surl = 'https://www.myfitnesspal.com/food/search?page=1&search='+ searchURL.replace(" ","%20")
 
     def getPage(url):
         ureq = Request(url, headers={'User-Agent':'Mozilla/5.0'})
@@ -62,4 +62,4 @@ def findFood(searchURL):
     print("Carbs: " + itemCarb)
     print("Protein: " + itemProtein)
     print("Fat: " + itemFat)
-    return [itemName,itemCal,itemFat,itemCarb,itemProtein,itemServ]
+    return [itemName,itemCal,itemCarb,itemFat,itemProtein,itemServ]

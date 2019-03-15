@@ -7,9 +7,9 @@ from fuzzywuzzy import fuzz
 # Search Parameters
  
 #pageNo='1'
-#searchURL='Pizza'
+# searchURL='Chicken Shawarma'
 def findFood(searchURL):
-    surl = 'https://www.myfitnesspal.com/food/search?page=1&search='+ searchURL
+    surl = 'https://www.myfitnesspal.com/food/search?page=1&search='+ searchURL.replace(" ","%20")
 
     def getPage(url):
         ureq = Request(url, headers={'User-Agent':'Mozilla/5.0'})
