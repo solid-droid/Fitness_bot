@@ -29,13 +29,13 @@ def hotel(strng):
 ##############################################################
 
 def food(val,cal):
-    dat = findFood(val)
-    print(val)
+    val=val.title()
+    dat = findFood(str(val))
     cal=int(cal)/3
     if int(dat[1]) < cal:
-        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a piece, which goes fine with your diet plan"
+        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, which goes fine with your diet plan"
     else:
-        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a piece, you must restrict your food intake to follow your diet plan"
+        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, you must restrict your food intake to follow your diet plan"
 
 
 ###############################################################
@@ -46,8 +46,19 @@ def condition():
     return text
 
 ##################################################################
-
-
+def calo(val,typ):
+    val = val.title()
+    print(val)
+    dat = findFood(str(val))
+    if(typ=="calories"):
+        return str(dat[0]) + " contains " + str(dat[1]) +" calories"
+    if(typ=="carb"):
+        return str(dat[0]) + " contains " + str(dat[2]) +" carbs"
+    if(typ=="fat"):
+        return str(dat[0]) + " contains " + str(dat[3]) +" fat"
+    if(typ=="protein"):
+        return str(dat[0]) + " contains " + str(dat[4]) +" protein"
+###############################################################
 app = Flask(__name__)
 def results():
     text="none"
@@ -72,6 +83,10 @@ def results():
     if intent == "Diet":
         text= diet()
 
+    if intent == "calorie":
+        num = req.get('queryResult').get('parameters').get('Burn')
+        fd = req.get('queryResult').get('parameters').get('food')
+        text= calo(fd,num)
 
     # action = req.get('queryResult').get('action')
     # param = req.get('queryResult').get('parameter')
