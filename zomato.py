@@ -16,7 +16,11 @@ BASE_URL="https://developers.zomato.com/api/v2.1/"
 
 def getTopRest(wrapper, location, sort="rating",count=3):
     loc_details= wrapper.getLocationDetails(location)
+    if(loc_details[0]==None):
+        return None, None
     res_list=wrapper.getRestuarents(loc_details, count=count, sort=sort)
+    if(res_list==None):
+        return None, None
     titles=[]
     menu_urls=[]
     ids=[]
@@ -25,7 +29,7 @@ def getTopRest(wrapper, location, sort="rating",count=3):
         titles.append(i["restaurant"]["name"])
         menu_urls.append(i["restaurant"]["menu_url"])
         ids.append(i["restaurant"]["id"])
-    return titles, menu_urls    
+    return titles, menu_urls  
     
 
 class ZomatoWrapper:
@@ -137,7 +141,7 @@ class ZomatoWrapper:
             city_id = location_details["location_suggestions"][0]["city_id"]
             location_type = location_details["location_suggestions"][0]["entity_type"]
         except IndexError:
-            return -1
+            return None, None, None
         else:
             return (location_id, location_type, city_id)
     
@@ -185,6 +189,8 @@ myWrapper=ZomatoWrapper(API_KEY)
 #establishments=myWrapper.getEstablishments(9)
 #print(json.dumps(establishments, indent=4))
 
-names, menu_urls=getTopRest(myWrapper, "edapally")
+names, menu_urls=getTopRest(myWrapper, "thrikkakara", count=5)
 print(names)
 print(menu_urls)
+#print(r_ids)
+
