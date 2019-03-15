@@ -141,12 +141,12 @@ def getItemByName(menu, itemname):
             
             
             
-menu=getMenu("thaal kitchen kakkanad")
-print(len(menu))
-itemlist=getItemByName(menu, "biryani")
-foood_list=getFoodItems(menu)
-print(foood_list)
-print(itemlist)
+# menu=getMenu("thaal kitchen")
+# print(len(menu))
+# itemlist=getItemByName(menu, "biryani")
+# foood_list=getFoodItems(menu)
+# print(foood_list)
+# print(itemlist)
     
     
     
