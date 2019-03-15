@@ -59,3 +59,4 @@ def findFood(searchURL):
     print("Running: " + timeRun)
     print("Cleaning: " + timeClean)
     return [itemName,itemCal,itemCarb,itemProtein,itemFat,timeCyc,timeRun,timeClean]
+

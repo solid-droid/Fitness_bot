@@ -1,6 +1,7 @@
 from flask import *
 import json
 from zomato import *
+from mfp import*
 myWrapper=ZomatoWrapper(API_KEY)
 
 text="none"
@@ -27,8 +28,9 @@ def hotel(strng):
         return ("Some of the top rated restaurants in the area are "+str(hotels[0])+", "+str(hotels[1])+" and "+str(hotels[2]))
 ##############################################################
 
-def food():
-    return(text)
+def food(val):
+    dat=findFood(val)
+    return "The "+ str(dat[0]) + "consist of" +  str(dat[1]) + "Calories"
 
 ###############################################################
 def recipi():
@@ -54,7 +56,7 @@ def results():
         text= hotel(req.get('queryResult').get('queryText'))
 
     if intent == "Food":
-        text= food()
+        text= food(req.get('queryResult').get('parameter').get('food'))
 
     if intent == "Recipi":
         text= recipi()
@@ -74,5 +76,4 @@ def results():
 def static_res():
     return make_response(jsonify(results()))
 if __name__ == '__main__':
-    print(hotel("Edappally"))
     app.run()
