@@ -91,7 +91,7 @@ def getVegList(menu):
    for i in menu.keys():
       n1=len(menu[i])
       for j in range(n1):
-          subsect=menu[i][j]
+          subsect=menu[i.replace(" ","").lower()][j]
           item=subsect.keys()
           for k in item:
            sub_list=subsect[k]
@@ -122,6 +122,37 @@ def getDict(menu):
                food_tuple.append((name, cost),)
    menu_dict=food_list           
    return food_list, food_tuple
+
+
+
+def getSubset(menu):
+    subset_dict={}
+    for i in menu.keys():
+        subset_dict[i.replace(" ","").lower()]=[]
+        for j in menu[i]:
+            subset_dict[i].append(list(j.keys())[0])
+    return subset_dict       
+def getItems(subsect):
+    subkey=list(subsect.keys())[0]
+    itemarray=subsect[subkey]
+    subset_dict={}
+    for l in itemarray:
+        name=list(l.keys())[0]
+        name=name.replace(" ", "").lower()
+        cost=list(l.values())[0]
+        subset_dict[name]=cost
+    return subset_dict    
+        
+def getPrice(search_item, dish_name):
+    menu=getMenu(search_item)
+    all_items, _=getDict(menu)
+    print(all_items.keys())
+    dish_name=dish_name.replace(" ","").lower()
+    try:
+        return all_items[dish_name]
+    except KeyError:
+        return None
+      
         
 
 def getFoodItems(menu):
@@ -141,13 +172,7 @@ def getItemByName(menu, itemname):
             
             
             
-# menu=getMenu("thaal kitchen")
-# print(len(menu))
-# itemlist=getItemByName(menu, "biryani")
-# foood_list=getFoodItems(menu)
-# print(foood_list)
-# print(itemlist)
-    
+
     
     
 

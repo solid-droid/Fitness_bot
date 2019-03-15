@@ -76,12 +76,13 @@ def calo(val,typ):
     return "Sorry nothing matching was found."
 #############################################################---Menu---##############################################
 def menu(hotel_name,val):
-    val = val.title()
+    val=val.replace(" ","")
+    print(val)
     cst=getPrice(str(hotel_name),str(val))
     if(cst==None):
-        return "No such dish was found in the menu of "+hotel_name
+        return "No such dish was found "
     else:
-        return val+" cost "+cst+"Rs at "+ hotel_name
+        return val+" cost "+str(cst)+"Rs at "+ hotel_name
 ###############################################################----HTTP SECTION---####################################
 app = Flask(__name__)
 def results():
