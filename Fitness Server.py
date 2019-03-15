@@ -53,12 +53,6 @@ def food(val,cal):
         return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, you must restrict your food intake to follow your diet plan"
 
 
-###############################################################---recipi---##########################################
-def recipi():
-    return(text)
-###############################################################---condition---#######################################
-def condition():
-    return text
 
 ##################################################################---Food Conent---##################################
 def calo(val,typ):
@@ -111,9 +105,7 @@ def results():
         num = req.get('queryResult').get('parameters').get('number')
         fd  = req.get('queryResult').get('parameters').get('food')
         text = food(fd,num)
-##################################################################################
-    if intent == "Recipi":
-        text = recipi()
+
 ##################################################################################
     if intent == "Menu":
         h1 = req.get('queryResult').get('parameters').get('hotel')

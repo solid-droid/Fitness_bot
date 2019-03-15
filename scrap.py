@@ -143,10 +143,10 @@ def getItems(subsect):
         subset_dict[name]=cost
     return subset_dict    
         
-def getPrice(search_item, dish_name):
+def getPrice(search_item="mariot", dish_name="chickenbiryani"):
     menu=getMenu(search_item)
     all_items, _=getDict(menu)
-    print(all_items.keys())
+    print(all_items)
     dish_name=dish_name.replace(" ","").lower()
     try:
         return all_items[dish_name]
@@ -169,9 +169,33 @@ def getItemByName(menu, itemname):
         if(i.find(itemname)!=-1):
             itemlist.append((i, menu_dict[i]),)
     return itemlist       
+def menuJson(search_item):
+    menu=getMenu(search_item)
+    menu=getDict(menu)
+    filename="menu_json"
+    filehandle=open(filename, "w")
+    filehandle.write(json.dumps(menu))
+    filehandle.close()
+               
             
             
-            
+#menu=getMenu("thaal kitchen kakkanad")
+#
+#print(len(menu))
+#itemlist=getItemByName(menu, "biryani")
+#foood_list=getFoodItems(menu)
+#print(foood_list)
+#print(itemlist)
+#subs=menu["maincourse"]
+#sublist=getSubset(menu)
+#print(sublist)
+#price=getPrice("iftar", "chickenbiriyani")
+#print(price)
+#menuJson("aavi")
+# price=getPrice("iftar", "chickenbiryani")
+# print(price)
+
+
 
     
     
