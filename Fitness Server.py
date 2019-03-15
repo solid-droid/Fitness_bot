@@ -33,9 +33,9 @@ def food(val,cal):
     print(val)
     cal=int(cal)/3
     if int(dat[1]) < cal:
-        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories, which goes fine with your diet plan"
+        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a piece, which goes fine with your diet plan"
     else:
-        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories, you must restrict your food intake to follow your diet plan"
+        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a piece, you must restrict your food intake to follow your diet plan"
 
 
 ###############################################################
