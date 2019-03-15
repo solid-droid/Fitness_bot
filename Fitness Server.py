@@ -18,7 +18,8 @@ def hotel(strng):
     strng=strng.split()
     location=strng[-1]
     location=location.capitalize()
-    print(location)
+    if(location=="Restaurants" or location=="Restaurant" or location=="Hotel" or location=="Hotels"):
+        return ("Sorry no location was specified.")
     hotels, _=getTopRest(myWrapper,location )
     if(hotels==None):
         return("Sorry I could not find any results.")
