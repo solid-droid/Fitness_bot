@@ -7,8 +7,20 @@ myWrapper=ZomatoWrapper(API_KEY)
 text="none"
 req=""
 
-def exercise():
-    return(text)
+def exercise(fd=None,num=None,brn=None):
+    if(fd==None):
+        if num==None:
+            return "I coudn't find any recomandations."
+        if(brn=="calorie"):
+            strng=calBurned(num)
+        elif brn=="fat":
+            strng=calBurned(num*9)
+    else:
+        val = val.title()
+        dat = findFood(str(val))
+        strng=calBurned(int(dat[1]))
+
+    return "You can burn the same by walking for "+str(strng[0])+"or jogging for "+str(strng[1])+" or just cycling for "+ str(strng[2])
 
 #########################################################
 def diet():
@@ -58,6 +70,7 @@ def calo(val,typ):
         return str(dat[0]) + " contains " + str(dat[3]) +" fat"
     if(typ=="protein"):
         return str(dat[0]) + " contains " + str(dat[4]) +" protein"
+    return "Sorry nothing matching was found."
 ###############################################################
 app = Flask(__name__)
 def results():
@@ -67,7 +80,13 @@ def results():
     intent = req.get('queryResult').get('intent').get('displayName')
     print(intent)
     if intent == "Exercise" :
-        text= exercise()
+        if req.get('queryResult').get('parameters').get('burn'):
+            brn = req.get('queryResult').get('parameters').get('burn')
+        if(req.get('queryResult').get('parameters').get('number')):
+            num = req.get('queryResult').get('parameters').get('number')
+        if req.get('queryResult').get('parameters').get('food'):
+            fd = req.get('queryResult').get('parameters').get('food')
+        text= exercise(fd,num,brn)
 
     if intent == "Restaurant":
         text= hotel(req.get('queryResult').get('queryText'))
