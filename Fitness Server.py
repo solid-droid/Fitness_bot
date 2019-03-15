@@ -28,9 +28,15 @@ def hotel(strng):
         return ("Some of the top rated restaurants in the area are "+str(hotels[0])+", "+str(hotels[1])+" and "+str(hotels[2]))
 ##############################################################
 
-def food(val):
-    dat=findFood(val)
-    return "The "+ str(dat[0]) + "consist of" +  str(dat[1]) + "Calories"
+def food(val,cal):
+    dat = findFood(val)
+    print(val)
+    cal=int(cal)/3
+    if int(dat[1]) < cal:
+        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories, which goes fine with your diet plan"
+    else:
+        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories, you must restrict your food intake to follow your diet plan"
+
 
 ###############################################################
 def recipi():
@@ -56,7 +62,9 @@ def results():
         text= hotel(req.get('queryResult').get('queryText'))
 
     if intent == "Food":
-        text= food(req.get('queryResult').get('parameter').get('food'))
+        num=req.get('queryResult').get('parameters').get('number')
+        fd=req.get('queryResult').get('parameters').get('food')
+        text= food(fd,num)
 
     if intent == "Recipi":
         text= recipi()
