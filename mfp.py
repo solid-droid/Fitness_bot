@@ -2,24 +2,42 @@ import re
 from bs4 import BeautifulSoup 
 from urllib.request import urlopen
 from urllib.request import Request
+from fuzzywuzzy import fuzz
 
 # Search Parameters
  
-pageNo='1'
-searchURL='Pizza'
+#pageNo='1'
+#searchURL='Pizza'
 def findFood(searchURL):
+    surl = 'https://www.myfitnesspal.com/food/search?page=1&search='+ searchURL
+
     def getPage(url):
         ureq = Request(url, headers={'User-Agent':'Mozilla/5.0'})
         return BeautifulSoup(urlopen(ureq).read(), 'lxml')
 
+    def findItem():
+        searchSoup = getPage(surl)
+        flist = []
+        mydivs = searchSoup.find_all("div", class_="food_info")
+        # mydivs = searchSoup.find_all("div", class_="jss330")
+        for items in mydivs:
+            flist.append((items.a.text,items.a["href"]))
+        if flist == []:
+            print("Error")
 
-    # Search MFP
-    url = 'https://www.myfitnesspal.com/food/search?page=1&search='+ searchURL
-    searchSoup = getPage(url)
-    item = searchSoup.find("div", class_="food_info")
-
+        maxRatio = 0
+        maxItem = flist[0]
+        for item in flist[::-1]:
+            currentRatio=fuzz.ratio(searchURL.lower(),item[0].lower())
+            if currentRatio >= maxRatio:
+                maxRatio = currentRatio
+                maxItem = item
+        print("Search Term: " + searchURL + "\nClosest Match: " + maxItem[0])        
+        return maxItem[1]
+        
     # Get Results
-    url = 'https://www.myfitnesspal.com'+str(item.a["href"])
+    url = 'https://www.myfitnesspal.com'+findItem()
+    print(url)
     soup = getPage(url)
 
     #========================================================Parse Output=============================================
@@ -41,7 +59,7 @@ def findFood(searchURL):
     # String Formatting for Exercise Info
 
     acString = soup.find("div",class_="inlineActivitiesContainer-2DZep").text
-    repDict = {"Minutes": " Minutes", "Hours": " Hours","Seconds":" Seconds"}
+    repDict = {"Minutes": " Minutes", "Hours": " Hours","Seconds":" Seconds","Minute": " Minute", "Hour": " Hour","Second":" Second"}
     pattern = re.compile("|".join(repDict.keys()))
     acString = pattern.sub(lambda m: repDict[m.group(0)], acString)
 
@@ -59,4 +77,3 @@ def findFood(searchURL):
     print("Running: " + timeRun)
     print("Cleaning: " + timeClean)
     return [itemName,itemCal,itemCarb,itemProtein,itemFat,timeCyc,timeRun,timeClean]
-
