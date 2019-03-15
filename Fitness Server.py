@@ -2,6 +2,7 @@ from flask import *
 import json
 from zomato import *
 from mfp_search import*
+from scrap import*
 myWrapper=ZomatoWrapper(API_KEY)
 
 text="none"
@@ -73,6 +74,14 @@ def calo(val,typ):
     if(typ=="protein"):
         return str(dat[0]) + " contains " + str(dat[4]) +" protein"
     return "Sorry nothing matching was found."
+#############################################################---Menu---##############################################
+def menu(hotel_name,val):
+    val = val.title()
+    cst=getPrice(str(hotel_name),str(val))
+    if(cst==None):
+        return "No such dish was found in the menu of "+hotel_name
+    else:
+        return val+" cost "+cst+"Rs at "+ hotel_name
 ###############################################################----HTTP SECTION---####################################
 app = Flask(__name__)
 def results():
@@ -90,31 +99,33 @@ def results():
         if(req.get('queryResult').get('parameters').get('number')):
             num = req.get('queryResult').get('parameters').get('number')
         if req.get('queryResult').get('parameters').get('food'):
-            fd = req.get('queryResult').get('parameters').get('food')
+            fd  = req.get('queryResult').get('parameters').get('food')
         wt=int(req.get('queryResult').get('parameters').get('unit-weight').get('amount'))
-        text= exercise(fd,num,brn,wt)
+        text = exercise(fd,num,brn,wt)
 ####################################################################################
     if intent == "Restaurant":
-        text= hotel(req.get('queryResult').get('queryText'))
+        text = hotel(req.get('queryResult').get('queryText'))
 ####################################################################################
     if intent == "Food":
-        num=req.get('queryResult').get('parameters').get('number')
-        fd=req.get('queryResult').get('parameters').get('food')
-        text= food(fd,num)
+        num = req.get('queryResult').get('parameters').get('number')
+        fd  = req.get('queryResult').get('parameters').get('food')
+        text = food(fd,num)
 ##################################################################################
     if intent == "Recipi":
-        text= recipi()
+        text = recipi()
 ##################################################################################
     if intent == "Menu":
-        text=menu()
+        h1 = req.get('queryResult').get('parameters').get('hotel')
+        fd = req.get('queryResult').get('parameters').get('food')
+        text = menu(h1,fd)
 ##################################################################################
     if intent == "Diet":
-        text= diet()
+        text = diet()
 ##################################################################################
     if intent == "calorie":
         num = req.get('queryResult').get('parameters').get('Burn')
         fd = req.get('queryResult').get('parameters').get('food')
-        text= calo(fd,num)
+        text = calo(fd,num)
 
     # action = req.get('queryResult').get('action')
     # param = req.get('queryResult').get('parameter')
