@@ -16,7 +16,7 @@ import json
 import pickle
 import re
 
-menu_dict={}
+menu_dict=None
 my_api_key ="AIzaSyCDjvWjDItyjd_Le9sFhddg-BeVtQkMy3o"
 my_cse_id = "007475133352381266766:wnzczgtjf4s"
 
@@ -68,14 +68,13 @@ def getHotelMenu(url):
 
 
 def getMenu(search_text, city="kochi"): #import this function jeby
-    try:
-        menu =menu_dict[search_text]
-        return menu
-    except KeyError:
+#    try:
+#        menu =menu_dict[search_text]
+#        return menu
+#    except KeyError:
         
         url=getHotelUrl(search_text + " ".format(city))
         menu=getHotelMenu(url)
-        menu_dict[search_text]=menu
         return menu
     
 #raw_html = simple_get('https://www.swiggy.com/kochi/aavi-ittys-panampily-nagar-panampilly-nagar')
@@ -85,17 +84,72 @@ def getMenu(search_text, city="kochi"): #import this function jeby
 #file.close()
 #print(len(raw_html))  
     
-
+#flags=re.IGNORECASE
 def getVegList(menu):
-    menu_json=json.dumps(menu)
-    veglist=re.findall(r"^(veg).(})$", menu_json)
+   #veg_list=menu
+   veg_list={}
+   for i in menu.keys():
+      n1=len(menu[i])
+      for j in range(n1):
+          subsect=menu[i][j]
+          item=subsect.keys()
+          for k in item:
+           sub_list=subsect[k]
+           for l in sub_list:
+               name=list(l.keys())[0]
+               name=name.replace(" ", "").lower()
+               cost=list(l.values())[0]
+               if(name.startswith("veg") or name.startswith("meal")):
+                   veg_list[name]=cost
+   return veg_list
+
+def getDict(menu):
+   global menu_dict
+   food_list={}
+   food_tuple=[]
+   for i in menu.keys():
+      n1=len(menu[i])
+      for j in range(n1):
+          subsect=menu[i][j]
+          item=subsect.keys()
+          for k in item:
+           sub_list=subsect[k]
+           for l in sub_list:
+               name=list(l.keys())[0]
+               name=name.replace(" ", "").lower()
+               cost=list(l.values())[0]
+               food_list[name]=cost
+               food_tuple.append((name, cost),)
+   menu_dict=food_list           
+   return food_list, food_tuple
+        
+
+def getFoodItems(menu):
+    if(menu_dict==None):
+        _, _=getDict(menu)
+        return list(menu_dict.keys())
+    else:
+        return list(menu_dict.keys())
+def getItemByName(menu, itemname): 
+    itemlist=[]
+    if(menu_dict==None):
+        _, _=getDict(menu)
+    for i in menu_dict.keys():
+        if(i.find(itemname)!=-1):
+            itemlist.append((i, menu_dict[i]),)
+    return itemlist       
+            
+            
+            
+menu=getMenu("thaal kitchen kakkanad")
+print(len(menu))
+itemlist=getItemByName(menu, "biryani")
+foood_list=getFoodItems(menu)
+print(foood_list)
+print(itemlist)
     
-    return veglist
-file=open("menu.pl", 'ab+') 
-menu_dict=json.loads(pickle.load(file))
-menu=getMenu("burger king")
-print(getVegList(menu))    
-pickle.dump(json.dumps(menu_dict), file)
+    
+    
 
     
     
