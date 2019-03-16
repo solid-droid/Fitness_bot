@@ -155,8 +155,22 @@ def getPrice(search_item="mariot", dish_name="chickenbiryani"):
     all_items, _=getDict(menu)
     print(all_items)
     dish_name=dish_name.replace(" ","").lower()
+
+    maxRatio = 0
+    maxItem = None
+
+    for itemKey in all_items.keys():
+      currentRatio=fuzz.ratio(dish_name,itemKey)
+
+      if currentRatio == 100:
+        return all_items[itemKey]
+
+      if currentRatio >= maxRatio:
+        maxRatio = currentRatio
+        bestMatch = itemKey
+
     try:
-        return all_items[dish_name]
+        return all_items[bestMatch]
     except KeyError:
         return None
       
@@ -176,22 +190,10 @@ def getItemByName(menu, itemname):
         return None
     if(menu_dict==None):
         _, _=getDict(menu)
-
-    maxRatio = 0
-    maxItem = (,)
-    for itemKey in menu_dict.keys():
-        currentRatio=fuzz.ratio(itemname,itemKey)
-        if currentRatio >= maxRatio:
-            maxRatio = currentRatio
-            maxItem = (itemKey,menu_dict[itemKey])
-    itemlist.append(maxItem)
-    return itemlist  
-            
-    # for i in menu_dict.keys():
-    #     if(i.find(itemname)!=-1):
-    #         itemlist.append((i, menu_dict[i]),)
-    # return itemlist
-
+    for i in menu_dict.keys():
+        if(i.find(itemname)!=-1):
+            itemlist.append((i, menu_dict[i]),)
+    return itemlist       
 def menuJson(search_item):
     menu=getMenu(search_item)
     menu=getDict(menu)
