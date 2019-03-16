@@ -14,14 +14,9 @@ import soup
 import google_scrap
 import json
 import pickle
-import re
 
-menu_dict=None
 
-file=open("api.txt", "r")
-my_api_key=file.read()
-file2=open("cse.txt", "r")
-my_cse_id=file2.read()
+
 
 def simple_get(url):
     """
@@ -208,11 +203,9 @@ def menuJson(search_item):
 #price=getPrice("iftar", "chickenbiriyani")
 #print(price)
 #menuJson("aavi")
-price=getPrice("iftar", "chickenbiryani")
-print(price)
 
 
-    
+
     
     
 
