@@ -2,7 +2,7 @@ from flask import *
 import json
 from zomato import *
 from mfp_search import*
-from scrap import*
+from fuzzy_scrap import*
 myWrapper=ZomatoWrapper(API_KEY)
 
 text="none"
@@ -19,7 +19,7 @@ def exercise(val,num,brn,wt):
     else:
         val = val.title()
         dat = findFood(str(val))
-        st  = calBurned(int(dat[1]),wt)
+        st  = calBurned(float(dat[1]),wt)
 
     return "You can burn the same by walking for "+str(st[0])+" , jogging for "+str(st[1])+" or just cycling for "+ str(st[2])
 
@@ -44,14 +44,16 @@ def hotel(strng):
 def food(val,cal):
     val=val.title()
     print(val)
-    dat = findFood(str(val))
-    cal=cal/3
-    print(dat[1])
-    if float(dat[1]) < cal:
-        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, which goes fine with your diet plan"
-    else:
-        return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, you must restrict your food intake to follow your diet plan"
-
+    try:
+        dat = findFood(str(val))
+        cal=cal/3
+        print(dat[1])
+        if float(dat[1]) < cal:
+            return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, which goes fine with your diet plan"
+        else:
+            return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, you must restrict your food intake to follow your diet plan"
+    except:
+        return "Sorry no such item found."
 
 
 ##################################################################---Food Conent---##################################
@@ -70,13 +72,14 @@ def calo(val,typ):
     return "Sorry nothing matching was found."
 #############################################################---Menu---##############################################
 def menu(hotel_name,val):
+    ttt=val.capitalize()
     val=val.replace(" ","")
     print(val)
     cst=getPrice(str(hotel_name),str(val))
     if(cst==None):
         return "No such dish was found "
     else:
-        return val+" cost "+str(cst)+"Rs at "+ hotel_name
+        return ttt+" cost "+str(cst)+"Rs at "+ hotel_name
 ###############################################################----HTTP SECTION---####################################
 app = Flask(__name__)
 def results():

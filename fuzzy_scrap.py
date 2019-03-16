@@ -14,6 +14,7 @@ import soup
 import google_scrap
 import json
 import pickle
+from fuzzywuzzy import fuzz
 
 
 
@@ -157,7 +158,7 @@ def getPrice(search_item="mariot", dish_name="chickenbiryani"):
     dish_name=dish_name.replace(" ","").lower()
 
     maxRatio = 0
-    maxItem = None
+    bestMatch = None
 
     for itemKey in all_items.keys():
       currentRatio=fuzz.ratio(dish_name,itemKey)

@@ -18,7 +18,7 @@ def google_search(search_term, api_key, cse_id, **kwargs):
 def getFinalUrl(search_text):
     results = google_search(
         'swiggy {} menu'.format(search_text), my_api_key, my_cse_id, num=2)
-    if(results.empty()):
+    if not results:
         return None
     final_url=results[0]["link"]
     return final_url
