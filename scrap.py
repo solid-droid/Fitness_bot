@@ -17,8 +17,8 @@ import pickle
 import re
 
 menu_dict=None
-my_api_key ="AIzaSyCDjvWjDItyjd_Le9sFhddg-BeVtQkMy3o"
-my_cse_id = "007475133352381266766:wnzczgtjf4s"
+my_api_key ="AIzaSyATdjYhc7raziOMNLJ0sMCX43TmP_X8VIQ"
+my_cse_id = "006092525517773744264:dhatscmi0_0"
 
 def simple_get(url):
     """
@@ -192,8 +192,8 @@ def menuJson(search_item):
 #price=getPrice("iftar", "chickenbiriyani")
 #print(price)
 #menuJson("aavi")
-# price=getPrice("iftar", "chickenbiryani")
-# print(price)
+price=getPrice("paragon", "chickenbiryani")
+print(price)
 
 
 

@@ -21,7 +21,7 @@ def exercise(val,num,brn,wt):
         dat = findFood(str(val))
         st  = calBurned(int(dat[1]),wt)
 
-    return "You can burn the same by walking for "+str(st[0])+" or jogging for "+str(st[1])+" or just cycling for "+ str(st[2])
+    return "You can burn the same by walking for "+str(st[0])+" , jogging for "+str(st[1])+" or just cycling for "+ str(st[2])
 
 #####################################################---Diet---######################################################
 def diet():
@@ -45,9 +45,9 @@ def food(val,cal):
     val=val.title()
     print(val)
     dat = findFood(str(val))
-    cal=int(cal)/3
+    cal=cal/3
     print(dat[1])
-    if int(dat[1]) < cal:
+    if float(dat[1]) < cal:
         return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, which goes fine with your diet plan"
     else:
         return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, you must restrict your food intake to follow your diet plan"
