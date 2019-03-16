@@ -11,7 +11,7 @@ req=""
 def exercise(val,num,brn,wt):
     if(val==""):
         if num==0:
-            return "I coudn't find any recomandations."
+            return "I could not find any recommendations."
         if(brn=="calories"):
             st = calBurned(num,wt)
         elif brn == "fat":
@@ -33,10 +33,10 @@ def hotel(strng):
     location=strng[-1]
     location=location.capitalize()
     if(location=="Restaurants" or location=="Restaurant" or location=="Hotel" or location=="Hotels"):
-        return ("Sorry no location was specified.")
+        return ("Sorry, no location was specified.")
     hotels, _=getTopRest(myWrapper,location )
     if(hotels==None):
-        return("Sorry I could not find any results.")
+        return("Sorry, I could not find any results.")
     else:
         return ("Some of the top rated restaurants in the area are "+str(hotels[0])+", "+str(hotels[1])+" and "+str(hotels[2]))
 ##############################################################---food---##############################################
@@ -49,11 +49,11 @@ def food(val,cal):
         cal=cal/3
         print(dat[1])
         if float(dat[1]) < cal:
-            return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, which goes fine with your diet plan"
+            return "The " + str(dat[0]) + " contains " + str(dat[1]) + " Calories a serving, which goes fine with your diet plan"
         else:
-            return "The " + str(dat[0]) + " consist of " + str(dat[1]) + " Calories a serving, you must restrict your food intake to follow your diet plan"
+            return "The " + str(dat[0]) + " contains " + str(dat[1]) + " Calories a serving, you must restrict your food intake to follow your diet plan"
     except:
-        return "Sorry no such item found."
+        return "Sorry, no such item found."
 
 
 ##################################################################---Food Conent---##################################
@@ -69,7 +69,7 @@ def calo(val,typ):
         return str(dat[0]) + " contains " + str(dat[3]) +" fat"
     if(typ=="protein"):
         return str(dat[0]) + " contains " + str(dat[4]) +" protein"
-    return "Sorry nothing matching was found."
+    return "Sorry, no matches were found."
 #############################################################---Menu---##############################################
 def menu(hotel_name,val):
     ttt=val.capitalize()
@@ -79,7 +79,7 @@ def menu(hotel_name,val):
     if(cst==None):
         return "No such dish was found "
     else:
-        return ttt+" cost "+str(cst)+"Rs at "+ hotel_name
+        return ttt+" costs ₹"+str(cst)+" at "+ hotel_name
 ###############################################################----HTTP SECTION---####################################
 app = Flask(__name__)
 def results():

@@ -202,29 +202,3 @@ def menuJson(search_item):
     filehandle=open(filename, "w")
     filehandle.write(json.dumps(menu))
     filehandle.close()
-               
-            
-            
-#menu=getMenu("thaal kitchen kakkanad")
-#
-#print(len(menu))
-#itemlist=getItemByName(menu, "biryani")
-#foood_list=getFoodItems(menu)
-#print(foood_list)
-#print(itemlist)
-#subs=menu["maincourse"]
-#sublist=getSubset(menu)
-#print(sublist)
-price=getPrice("ifthar", "chickenbiryani")
-print(price)
-
-
-
-
-    
-    
-
-    
-    
-
-
