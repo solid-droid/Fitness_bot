@@ -200,9 +200,9 @@ def menuJson(search_item):
 #subs=menu["maincourse"]
 #sublist=getSubset(menu)
 #print(sublist)
-#price=getPrice("iftar", "chickenbiriyani")
-#print(price)
-#menuJson("aavi")
+price=getPrice("ifthar", "chickenbiryani")
+print(price)
+
 
 
 
