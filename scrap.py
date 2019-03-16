@@ -17,8 +17,11 @@ import pickle
 import re
 
 menu_dict=None
-my_api_key ="AIzaSyCDjvWjDItyjd_Le9sFhddg-BeVtQkMy3o"
-my_cse_id = "007475133352381266766:wnzczgtjf4s"
+
+file=open("api.txt", "r")
+my_api_key=file.read()
+file2=open("cse.txt", "r")
+my_cse_id=file2.read()
 
 def simple_get(url):
     """
@@ -62,8 +65,11 @@ def getHotelUrl(search_text):
 
 def getHotelMenu(url):
     raw_html=simple_get(url)
-    menu=soup.getFullMenu(raw_html)
-    return menu
+    try:
+        menu=soup.getFullMenu(raw_html)
+        return menu
+    except Exception:
+        return None
     
 
 
@@ -75,6 +81,8 @@ def getMenu(search_text, city="kochi"): #import this function jeby
         
         url=getHotelUrl(search_text + " ".format(city))
         menu=getHotelMenu(url)
+        if(menu==None):
+            return None
         return menu
     
 #raw_html = simple_get('https://www.swiggy.com/kochi/aavi-ittys-panampily-nagar-panampilly-nagar')
@@ -126,6 +134,8 @@ def getDict(menu):
 
 
 def getSubset(menu):
+    if(menu==None):
+        return None
     subset_dict={}
     for i in menu.keys():
         subset_dict[i.replace(" ","").lower()]=[]
@@ -145,6 +155,8 @@ def getItems(subsect):
         
 def getPrice(search_item="mariot", dish_name="chickenbiryani"):
     menu=getMenu(search_item)
+    if(menu==None):
+        return None
     all_items, _=getDict(menu)
     print(all_items)
     dish_name=dish_name.replace(" ","").lower()
@@ -156,6 +168,8 @@ def getPrice(search_item="mariot", dish_name="chickenbiryani"):
         
 
 def getFoodItems(menu):
+    if(menu==None):
+        return None
     if(menu_dict==None):
         _, _=getDict(menu)
         return list(menu_dict.keys())
@@ -163,6 +177,8 @@ def getFoodItems(menu):
         return list(menu_dict.keys())
 def getItemByName(menu, itemname): 
     itemlist=[]
+    if(menu==None):
+        return None
     if(menu_dict==None):
         _, _=getDict(menu)
     for i in menu_dict.keys():
@@ -192,8 +208,8 @@ def menuJson(search_item):
 #price=getPrice("iftar", "chickenbiriyani")
 #print(price)
 #menuJson("aavi")
-#price=getPrice("iftar", "chickenbiryani")
-#print(price)
+price=getPrice("iftar", "chickenbiryani")
+print(price)
 
 
     
